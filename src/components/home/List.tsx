@@ -7,6 +7,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { PiTrashFill, PiCheckCircleFill, PiXCircleFill } from "react-icons/pi";
 
 import { useProductsStore, type Product } from "../../store/useProductsStore";
+import { useDeleteProductStore } from "../../store/useDeleteProductStore";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -21,6 +22,9 @@ const fetchProducts = async (): Promise<Product[]> => {
 function List() {
     const products = useProductsStore((state) => state.products);
     const setProducts = useProductsStore((state) => state.setProducts);
+
+    const { deleteProduct, isDeleting, error: deleteError } =
+        useDeleteProductStore();
 
     const { data, isLoading, isError, error } = useQuery<Product[], Error>({
         queryKey: ["products"],
@@ -40,13 +44,19 @@ function List() {
     if (isError) {
         return (
             <div className="text-red-500">
-                Failed to load products: {error.message}
+                {error.message}
             </div>
         );
     }
 
     return (
         <div>
+            {deleteError && (
+                <div className="mb-2 text-sm text-red-500">
+                    Failed to delete product: {deleteError}
+                </div>
+            )}
+
             <table className="w-full border-separate border-spacing-y-2">
                 <thead>
                     <tr className="bg-white text-[#656575] text-[15px] text-left">
@@ -132,7 +142,11 @@ function List() {
                                                 <MdModeEditOutline />
                                             </IconContext.Provider>
                                         </Link>
-                                        <button className="icon">
+                                        <button
+                                            className="icon disabled:opacity-50 disabled:cursor-not-allowed"
+                                            onClick={() => deleteProduct(product._id)}
+                                            disabled={isDeleting}
+                                        >
                                             <IconContext.Provider
                                                 value={{ className: "text-[20px] text-red-600" }}
                                             >
