@@ -14,4 +14,9 @@
     .icon {
         @apply p-2.5 bg-white drop-shadow-2xl rounded-[9px] cursor-pointer;
     }
+
+    .add-form input,
+    .add-form select {
+        @apply bg-white p-3 text-[15px] appearance-none rounded-2xl outline-none
+    }
 }
