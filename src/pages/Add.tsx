@@ -1,6 +1,10 @@
+import Form from "../components/Form"
+
 function Add() {
     return (
-        <div>Add</div>
+        <div>
+            <Form />
+        </div>
     )
 }
 
