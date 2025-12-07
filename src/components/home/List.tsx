@@ -135,10 +135,8 @@ function List() {
                                 <td className="py-2 px-5 font-bold">${product.price}</td>
                                 <td className="py-2 px-5">
                                     <div className="flex items-center justify-end gap-2">
-                                        <Link to='/edit' className="icon">
-                                            <IconContext.Provider
-                                                value={{ className: "text-[20px] text-blue-600" }}
-                                            >
+                                        <Link to={`/edit/${product._id}`} className="icon">
+                                            <IconContext.Provider value={{ className: "text-[20px] text-blue-600" }}>
                                                 <MdModeEditOutline />
                                             </IconContext.Provider>
                                         </Link>
